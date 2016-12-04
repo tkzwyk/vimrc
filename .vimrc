@@ -1,3 +1,6 @@
+set encoding=utf-8
+set fileencoding=utf-8
+
 " ===== Config of dein.vim START =====
 " Refer to : http://qiita.com/delphinus/items/00ff2c0ba972c6e41542
 
