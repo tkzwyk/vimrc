@@ -1,129 +1,52 @@
-" ============neobundle用設定============
+" ===== Config of dein.vim START =====
+" Refer to : http://qiita.com/delphinus/items/00ff2c0ba972c6e41542
 
-" neobundle settings {{{
-if has('vim_starting')
-  set nocompatible
-  " neobundle をインストールしていない場合は自動インストール
-  if !isdirectory(expand("~/.vim/bundle/neobundle.vim/"))
-    echo "install neobundle..."
-    " vim からコマンド呼び出しているだけ neobundle.vim のクローン
-    :call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+" reset augroup
+" Refer to : http://qiita.com/kawaz/items/ee725f6214f91337b42b
+augroup MyAutoCmd
+  autocmd!
+augroup END
+
+" プラグインが実際にインストールされるディレクトリ
+let s:dein_dir = expand('~/.cache/dein')
+" dein.vim 本体
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+" dein.vim がなければ github から落としてくる
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
   endif
-  " runtimepath の追加は必須
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-call neobundle#begin(expand('~/.vim/bundle'))
-let g:neobundle_default_git_protocol='https'
-
-" neobundle#begin - neobundle#end の間に導入するプラグインを記載します。
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-NeoBundle 'nanotech/jellybeans.vim'
-
-NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-  \     'windows' : 'make -f make_mingw32.mak',
-  \     'cygwin' : 'make -f make_cygwin.mak',
-  \     'mac' : 'make -f make_mac.mak',
-  \     'unix' : 'make -f make_unix.mak',
-  \    },
-  \ }
-
-NeoBundle 'Townk/vim-autoclose'
-
-NeoBundleLazy 'tpope/vim-endwise', {
-  \ 'autoload' : { 'insert' : 1,}}
-
-NeoBundleLazy 'AndrewRadev/switch.vim'
-
-" switch {{{
-nmap + :Switch<CR>
-nmap - :Switch<CR>
-" }}}
-
-if has('lua')
-  NeoBundleLazy 'Shougo/neocomplete.vim', {
-    \ 'depends' : 'Shougo/vimproc',
-    \ 'autoload' : { 'insert' : 1,}
-    \ }
+  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 endif
 
-" neocomplete {{{
-let g:neocomplete#enable_at_startup               = 1
-let g:neocomplete#auto_completion_start_length    = 3
-let g:neocomplete#enable_ignore_case              = 1
-let g:neocomplete#enable_smart_case               = 1
-let g:neocomplete#enable_camel_case               = 1
-let g:neocomplete#use_vimproc                     = 1
-let g:neocomplete#sources#buffer#cache_limit_size = 1000000
-let g:neocomplete#sources#tags#cache_limit_size   = 30000000
-let g:neocomplete#enable_fuzzy_completion         = 1
-let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
-" }}}
+" 設定開始
+if dein#load_state(s:dein_dir)
+  " プラグインリストを収めた TOML ファイル
+  " 予め TOML ファイルを用意しておく
+  let g:rc_dir    = expand('~/.vim/rc')
+  let s:toml      = g:rc_dir . '/dein.toml'
+  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
 
-" Ruby on rails
-NeoBundleLazy 'tpope/vim-rails'
+  call dein#begin(s:dein_dir, [$MYVIMRC, s:toml])
 
-" Ruby
-NeoBundleLazy 'vim-ruby/vim-ruby', {
-  \ 'autoload' : {'filetypes' : ['ruby', 'eruby']}}
+  " TOML を読み込み、キャッシュしておく
+  call dein#load_toml(s:toml,      {'lazy': 0})
+  call dein#load_toml(s:lazy_toml, {'lazy': 1})
 
-NeoBundleLazy 'NigoroJr/rsense'
-NeoBundleLazy 'supermomonga/neocomplete-rsense.vim', {
-    \ 'autoload' : { 'insert' : 1, 'filetype' : 'ruby', } }
-
-" 補完の設定
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
+  " 設定終了
+  call dein#end()
+  call dein#save_state()
 endif
-let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
-let g:rsenseUseOmniFunc = 1
 
-" 静的解析
-NeoBundleLazy 'scrooloose/syntastic'
+" Install not installed plugins on startup
+if dein#check_install()
+  call dein#install()
+endif
+" ===== Config of dein.vim END =====
 
-" ドキュメント参照
-NeoBundleLazy 'thinca/vim-ref'
-NeoBundleLazy 'yuku-t/vim-ref-ri'
-
-" メソッド定義元へのジャンプ
-NeoBundleLazy 'szw/vim-tags'
-
-" html
-NeoBundleLazy 'hail2u/vim-css3-syntax'
-NeoBundleLazy 'othree/html5.vim'
-
-" javascript
-NeoBundleLazy 'kchmck/vim-coffee-script'
-NeoBundleLazy 'moll/vim-node'
-NeoBundleLazy 'pangloss/vim-javascript'
-
-" Markdown
-NeoBundleLazy 'rcmdnk/vim-markdown'
-" vim-markdown {{{
-let g:vim_markdown_folding_disabled = 1
-" }}}
-
-NeoBundleLazy 'kannokanno/previm'
-NeoBundleLazy 'tyru/open-browser.vim'
-
-au BufRead,BufNewFile *.md set filetype=markdown
-let g:previm_open_cmd = 'open'
-
-NeoBundleLazy 'thinca/vim-quickrun'
-
-" vimrc に記述されたプラグインでインストールされていないものがないかチェックする
-NeoBundleCheck
-call neobundle#end()
-filetype plugin indent on
-
-" どうせだから jellybeans カラースキーマを使ってみましょう
 set t_Co=256
 syntax on
-colorscheme jellybeans
-
-" ============neobundle用設定============
-
 
 set backspace=indent,eol,start
 

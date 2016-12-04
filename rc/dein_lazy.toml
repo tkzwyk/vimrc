@@ -1,0 +1,85 @@
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+on_i = 1
+if   = '''has('lua')'''
+depends = ['Shougo/vimproc']
+hook_post_update = '''
+  let g:neocomplete#enable_at_startup               = 1
+  let g:neocomplete#auto_completion_start_length    = 3
+  let g:neocomplete#enable_ignore_case              = 1
+  let g:neocomplete#enable_smart_case               = 1
+  let g:neocomplete#enable_camel_case               = 1
+  let g:neocomplete#use_vimproc                     = 1
+  let g:neocomplete#sources#buffer#cache_limit_size = 1000000
+  let g:neocomplete#sources#tags#cache_limit_size   = 30000000
+  let g:neocomplete#enable_fuzzy_completion         = 1
+  let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
+'''
+
+[[plugins]]
+repo = 'tpope/vim-endwise'
+on_i = 1
+
+[[plugins]]
+repo = 'AndrewRadev/switch.vim'
+
+[[plugins]] # Ruby on rails
+repo = 'tpope/vim-rails'
+
+[[plugins]] # Ruby
+repo = 'vim-ruby/vim-ruby'
+on_ft = ['ruby', 'eruby']
+
+[[plugins]] # Ruby
+repo = 'NigoroJr/rsense'
+
+[[plugins]] # toml syntax
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]] # static code analysis
+repo = 'scrooloose/syntastic'
+
+[[plugins]] # Document reference
+repo = 'thinca/vim-ref'
+
+[[plugins]] # Document reference
+repo = 'yuku-t/vim-ref-ri'
+
+[[plugins]]
+repo = 'szw/vim-tags'
+
+[[plugins]] # html
+repo = 'hail2u/vim-css3-syntax'
+
+[[plugins]] # html
+repo = 'othree/html5.vim'
+
+[[plugins]] # javascript
+repo = 'kchmck/vim-coffee-script'
+
+[[plugins]] # javascript
+repo = 'moll/vim-node'
+
+[[plugins]] # javascript
+repo = 'pangloss/vim-javascript'
+
+[[plugins]] # Markdown
+repo = 'rcmdnk/vim-markdown'
+hook_post_update = '''
+  let g:vim_markdown_folding_disabled = 1
+'''
+
+[[plugins]]
+repo = 'kannokanno/previm'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+hook_post_update = '''
+  au BufRead,BufNewFile *.md set filetype=markdown
+  let g:previm_open_cmd = 'open'
+'''
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
