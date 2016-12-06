@@ -3,6 +3,7 @@
 cd $(dirname $0)
 
 file_list=$(cat << EOS
+.bashrc
 .vimrc
 rc/dein.toml
 rc/dein_lazy.toml
