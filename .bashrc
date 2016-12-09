@@ -203,3 +203,8 @@ alias open='cygstart'
 alias tenki='curl -4 wttr.in/Yokohama'
 alias ipl='perl -de 1'
 
+# Set a default prompt of: user@host and current_directory
+if [ "$(expr substr $(uname) 1 6)" == 'CYGWIN' ]; then
+  PS1='\[\e]0;\w\a\]\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\] \$ '
+fi
+
