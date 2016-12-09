@@ -200,7 +200,7 @@ alias l='ls -CF'                              #
 alias diff='colordiff'
 alias ping='cocot ping'
 alias open='cygstart'
-alias tenki='curl -4 wttr.in/Yokohama'
+alias tenki='curl -4 wttr.in/Tokyo'
 alias ipl='perl -de 1'
 
 # Set a default prompt of: user@host and current_directory
