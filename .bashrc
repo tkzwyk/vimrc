@@ -217,3 +217,9 @@ if [ "$(expr substr $(uname) 1 6)" == 'CYGWIN' ]; then
   PS1='\[\e]0;\w\a\]\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\] \$ '
 fi
 
+git_comp="$HOME/.git-completion.bash"
+if [ ! -f $git_comp ]; then
+  wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -O $git_comp
+fi
+source $git_comp
+
