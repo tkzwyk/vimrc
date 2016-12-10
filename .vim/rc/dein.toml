@@ -1,9 +1,6 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]]
-repo = 'nanotech/jellybeans.vim'
-
 [[plugins]] # colorscheme
 # Refer to : http://qiita.com/kawaz/items/ee725f6214f91337b42b
 repo = 'w0ng/vim-hybrid'

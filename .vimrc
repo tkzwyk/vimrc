@@ -100,8 +100,6 @@ augroup END  " }}}
 " ファイル形式別インデントのロードを有効化する
 filetype plugin indent on
 
-syntax enable
-
 noremap <C-j> <esc>
 noremap! <C-j> <esc>
 nnoremap <Tab> <C-w>w
