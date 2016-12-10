@@ -197,8 +197,17 @@ alias l='ls -CF'                              #
 # 
 # alias cd=cd_func
 
-alias diff='colordiff'
-alias ping='cocot ping'
+type colordiff > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  alias diff='colordiff'
+else
+  alias diff='diff --color'
+fi
+
+type cocot > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  alias ping='cocot ping'
+fi
 alias open='cygstart'
 alias tenki='curl -4 wttr.in/Tokyo'
 alias ipl='perl -de 1'
