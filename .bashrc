@@ -77,6 +77,11 @@
 # Whenever displaying the prompt, write the previous line to disk
 # export PROMPT_COMMAND="history -a"
 
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
 # Aliases
 #
 # Some people use a different file for aliases
@@ -107,7 +112,7 @@ alias egrep='egrep --color=auto'              # show differences in colour
 alias fgrep='fgrep --color=auto'              # show differences in colour
 #
 # Some shortcuts for different directory listings
-alias ls='ls -hF --color=tty'                 # classify files in colour
+alias ls='ls -h --color=auto'                 # classify files in colour
 # alias dir='ls --color=auto --format=vertical'
 # alias vdir='ls --color=auto --format=long'
 alias ll='ls -Al'                              # long list
@@ -200,8 +205,10 @@ alias l='ls -CF'                              #
 type colordiff > /dev/null 2>&1
 if [ $? -eq 0 ]; then
   alias diff='colordiff'
-else
+elif diff --help | grep color > /dev/null; then
   alias diff='diff --color'
+else
+  :
 fi
 
 type cocot > /dev/null 2>&1
