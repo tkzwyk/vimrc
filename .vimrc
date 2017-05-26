@@ -108,6 +108,7 @@ nnoremap <Tab> <C-w>w
 autocmd InsertLeave * set nopaste
 
 "バイナリ編集(xxd)モード（vim -b での起動、もしくは *.bin ファイルを開くと発動します）
+" Refer to : http://d.hatena.ne.jp/rdera/touch/20081022/1224682665
 augroup BinaryXXD
   autocmd!
   autocmd BufReadPre  *.bin let &binary =1
