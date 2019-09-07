@@ -70,6 +70,12 @@ map Q gq
 
 set hlsearch
 
+" When both of ignorecase and smartcase are enabled,
+"  - if a search keyword is lowercase only, ignore case.
+"  - if a search keyword includes uppercase, don't ignore case.
+set ignorecase
+set smartcase
+
 set autoindent    " always set autoindenting on
 set smartindent
 
