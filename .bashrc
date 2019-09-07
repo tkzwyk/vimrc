@@ -35,6 +35,13 @@ shopt -s cdspell
 # Any completions you add in ~/.bash_completion are sourced last.
 [[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
+# Git completion
+git_comp="$HOME/.git-completion.bash"
+if [ ! -f $git_comp ]; then
+  wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -O $git_comp
+fi
+source $git_comp
+
 
 ## History Options
 
@@ -99,6 +106,36 @@ esac
 
 alias ll='ls -Alh'
 alias la='ls -A'
+
+# Colorize diff command output
+if [[ -x `which colordiff` ]]; then
+  alias diff='colordiff'
+elif diff --help | grep color > /dev/null; then
+  alias diff='diff --color'
+else
+  :
+fi
+
+# Convert character encoding
+type cocot > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  alias ping='cocot ping'
+fi
+
+# Set up open command for Cygwin
+case "${OSTYPE}" in
+  CYGWIN*)
+    alias open='cygstart'
+    ;;
+esac
+
+# Display weather
+alias weather='curl -4 wttr.in/?M'
+# Able to specify a city like: alias weather='curl -4 wttr.in/Tokyo?M'
+
+# Interactive Perl Shell (REPL for Perl)
+alias ipl='perl -de 1'
+
 
 # Umask
 #
@@ -183,41 +220,7 @@ alias la='ls -A'
 #
 # alias cd=cd_func
 
-# Colorize diff command output
-if [[ -x `which colordiff` ]]; then
-  alias diff='colordiff'
-elif diff --help | grep color > /dev/null; then
-  alias diff='diff --color'
-else
-  :
-fi
-
-# Convert character encoding
-type cocot > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-  alias ping='cocot ping'
-fi
-
-# Set up open command for Cygwin
-case "${OSTYPE}" in
-  CYGWIN*)
-    alias open='cygstart'
-    ;;
-esac
-
-# Display weather
-alias weather='curl -4 wttr.in/?M'
-# Able to specify a city like: alias weather='curl -4 wttr.in/Tokyo?M'
-
-# Interactive Perl Shell (REPL for Perl)
-alias ipl='perl -de 1'
 
 # Set a default prompt of: user@host ~/path $
 PS1='\[\e]0;\w\a\]\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\] \$ '
-
-git_comp="$HOME/.git-completion.bash"
-if [ ! -f $git_comp ]; then
-  wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -O $git_comp
-fi
-source $git_comp
 
