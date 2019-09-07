@@ -1,57 +1,29 @@
-# To the extent possible under law, the author(s) have dedicated all 
-# copyright and related and neighboring rights to this software to the 
-# public domain worldwide. This software is distributed without any warranty. 
-# You should have received a copy of the CC0 Public Domain Dedication along 
-# with this software. 
-# If not, see <http://creativecommons.org/publicdomain/zero/1.0/>. 
-
-# base-files version 4.2-4
-
-# ~/.bashrc: executed by bash(1) for interactive shells.
-
-# The latest version as installed by the Cygwin Setup program can
-# always be found at /etc/defaults/etc/skel/.bashrc
-
-# Modifying /etc/skel/.bashrc directly will prevent
-# setup from updating it.
-
-# The copy in your home directory (~/.bashrc) is yours, please
-# feel free to customise it to create a shell
-# environment to your liking.  If you feel a change
-# would be benifitial to all, please feel free to send
-# a patch to the cygwin mailing list.
-
-# User dependent .bashrc file
-
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
-# Shell Options
-#
-# See man bash for more options...
-#
+
+## Shell Options
+
 # Don't wait for job termination notification
 # set -o notify
-#
+
 # Don't use ^D to exit
 # set -o ignoreeof
-#
+
 # Use case-insensitive filename globbing
 # shopt -s nocaseglob
-#
+
 # Make bash append rather than overwrite the history on disk
-# shopt -s histappend
-#
+shopt -s histappend
+
 # When changing directory small typos can be ignored by bash
 # for example, cd /vr/lgo/apaache would find /var/log/apache
-# shopt -s cdspell
+shopt -s cdspell
 
-# Completion options
-#
+
+## Completion Options
+
 # These completion tuning parameters change the default behavior of bash_completion:
-#
-# Define to access remotely checked-out files over passwordless ssh for CVS
-# COMP_CVS_REMOTE=1
 #
 # Define to avoid stripping description in --option=description of './configure --help'
 # COMP_CONFIGURE_HINTS=1
@@ -61,10 +33,11 @@
 #
 # Uncomment to turn on programmable completion enhancements.
 # Any completions you add in ~/.bash_completion are sourced last.
-# [[ -f /etc/bash_completion ]] && . /etc/bash_completion
+[[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
-# History Options
-#
+
+## History Options
+
 # Don't put duplicate lines in the history.
 # export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
 #
@@ -77,47 +50,55 @@
 # Whenever displaying the prompt, write the previous line to disk
 # export PROMPT_COMMAND="history -a"
 
+# Set date and time format for history comamnd
+# See https://zwischenzugs.com/2019/05/11/seven-surprising-bash-variables/
+HISTTIMEFORMAT='+%F %T%z '
+
+
 # Source global definitions
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
-# Aliases
-#
-# Some people use a different file for aliases
-# if [ -f "${HOME}/.bash_aliases" ]; then
-#   source "${HOME}/.bash_aliases"
-# fi
-#
-# Some example alias instructions
+
+## Aliases
+
 # If these are enabled they will be used instead of any instructions
 # they may mask.  For example, alias rm='rm -i' will mask the rm
 # application.  To override the alias instruction use a \ before, ie
 # \rm will call the real rm not the alias.
-#
-# Interactive operation...
-# alias rm='rm -i'
-# alias cp='cp -i'
-# alias mv='mv -i'
-#
+
+# Show a prompt before about to overwrite an existing file
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
 # Default to human readable figures
 alias df='df -h'
 alias du='du -h'
-#
-# Misc :)
-# alias less='less -r'                          # raw control characters
-# alias whence='type -a'                        # where, of a sort
-alias grep='grep --color'                     # show differences in colour
-alias egrep='egrep --color=auto'              # show differences in colour
-alias fgrep='fgrep --color=auto'              # show differences in colour
-#
-# Some shortcuts for different directory listings
-alias ls='ls -h --color=auto'                 # classify files in colour
-# alias dir='ls --color=auto --format=vertical'
-# alias vdir='ls --color=auto --format=long'
-alias ll='ls -Al'                              # long list
-alias la='ls -A'                              # all but . and ..
-alias l='ls -CF'                              #
+
+# Colorize by ANSI color escape sequences
+alias less='less --RAW-CONTROL-CHARS'
+
+# where, of a sort
+alias whence='type -a'
+
+alias grep='grep --color'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+# Colorize ls command output
+case "${OSTYPE}" in
+  darwin*)
+    alias ls="ls -G"
+    ;;
+  *)
+    alias ls='ls --color=auto'
+    ;;
+esac
+
+alias ll='ls -Alh'
+alias la='ls -A'
 
 # Umask
 #
@@ -137,13 +118,13 @@ alias l='ls -CF'                              #
 # Some example functions:
 #
 # a) function settitle
-# settitle () 
-# { 
-#   echo -ne "\e]2;$@\a\e]1;$@\a"; 
+# settitle ()
+# {
+#   echo -ne "\e]2;$@\a\e]1;$@\a";
 # }
-# 
+#
 # b) function cd_func
-# This function defines a 'cd' replacement function capable of keeping, 
+# This function defines a 'cd' replacement function capable of keeping,
 # displaying and accessing history of visited directories, up to 10 entries.
 # To use it, uncomment it, source this file and try 'cd --'.
 # acd_func 1.0.5, 10-nov-2004
@@ -152,15 +133,15 @@ alias l='ls -CF'                              #
 # {
 #   local x2 the_new_dir adir index
 #   local -i cnt
-# 
+#
 #   if [[ $1 ==  "--" ]]; then
 #     dirs -v
 #     return 0
 #   fi
-# 
+#
 #   the_new_dir=$1
 #   [[ -z $1 ]] && the_new_dir=$HOME
-# 
+#
 #   if [[ ${the_new_dir:0:1} == '-' ]]; then
 #     #
 #     # Extract dir N from dirs
@@ -170,21 +151,21 @@ alias l='ls -CF'                              #
 #     [[ -z $adir ]] && return 1
 #     the_new_dir=$adir
 #   fi
-# 
+#
 #   #
 #   # '~' has to be substituted by ${HOME}
 #   [[ ${the_new_dir:0:1} == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
-# 
+#
 #   #
 #   # Now change to the new dir and add to the top of the stack
 #   pushd "${the_new_dir}" > /dev/null
 #   [[ $? -ne 0 ]] && return 1
 #   the_new_dir=$(pwd)
-# 
+#
 #   #
 #   # Trim down everything beyond 11th entry
 #   popd -n +11 2>/dev/null 1>/dev/null
-# 
+#
 #   #
 #   # Remove any other occurence of this dir, skipping the top of the stack
 #   for ((cnt=1; cnt <= 10; cnt++)); do
@@ -196,14 +177,14 @@ alias l='ls -CF'                              #
 #       cnt=cnt-1
 #     fi
 #   done
-# 
+#
 #   return 0
 # }
-# 
+#
 # alias cd=cd_func
 
-type colordiff > /dev/null 2>&1
-if [ $? -eq 0 ]; then
+# Colorize diff command output
+if [[ -x `which colordiff` ]]; then
   alias diff='colordiff'
 elif diff --help | grep color > /dev/null; then
   alias diff='diff --color'
@@ -211,18 +192,28 @@ else
   :
 fi
 
+# Convert character encoding
 type cocot > /dev/null 2>&1
 if [ $? -eq 0 ]; then
   alias ping='cocot ping'
 fi
-alias open='cygstart'
-alias tenki='curl -4 wttr.in/Tokyo'
+
+# Set up open command for Cygwin
+case "${OSTYPE}" in
+  CYGWIN*)
+    alias open='cygstart'
+    ;;
+esac
+
+# Display weather
+alias weather='curl -4 wttr.in/?M'
+# Able to specify a city like: alias weather='curl -4 wttr.in/Tokyo?M'
+
+# Interactive Perl Shell (REPL for Perl)
 alias ipl='perl -de 1'
 
-# Set a default prompt of: user@host and current_directory
-if [ "$(expr substr $(uname) 1 6)" == 'CYGWIN' ]; then
-  PS1='\[\e]0;\w\a\]\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\] \$ '
-fi
+# Set a default prompt of: user@host ~/path $
+PS1='\[\e]0;\w\a\]\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\] \$ '
 
 git_comp="$HOME/.git-completion.bash"
 if [ ! -f $git_comp ]; then
