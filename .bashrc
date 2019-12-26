@@ -94,6 +94,9 @@ alias grep='grep --color'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
+alias gst='git status'
+alias gdi='git diff'
+
 # Colorize ls command output
 case "${OSTYPE}" in
   darwin*)
@@ -117,10 +120,16 @@ else
 fi
 
 # Convert character encoding
-type cocot > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-  alias ping='cocot ping'
-fi
+case "${OSTYPE}" in
+  darwin*)
+    ;;
+  *)
+    type cocot > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+      alias ping='cocot ping'
+    fi
+    ;;
+esac
 
 # Set up open command for Cygwin
 case "${OSTYPE}" in
