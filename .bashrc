@@ -229,6 +229,23 @@ alias ipl='perl -de 1'
 #
 # alias cd=cd_func
 
+function g() {
+  cd $(ghq root)/$(ghq list | peco)
+}
+
+function git-push-with-tags() {
+  git push
+  git push --tags
+}
+
+function git-clean-after-merging-PR() {
+  if [ "$1" == "" ]; then
+    currentBranch=$(git branch --show-current)
+    read -p "Enter target branch name [${currentBranch}]: " answer
+    targetBranch=${answer:-$currentBranch}
+  fi
+  git checkout master && git pull && git branch -d "$targetBranch" && git pull --prune
+}
 
 # Set a default prompt of: user@host ~/path $
 PS1='\[\e]0;\w\a\]\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\] \$ '
