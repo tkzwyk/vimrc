@@ -61,6 +61,9 @@ source $git_comp
 # See https://zwischenzugs.com/2019/05/11/seven-surprising-bash-variables/
 HISTTIMEFORMAT='+%F %T%z '
 
+HISTSIZE=30000
+HISTFILESIZE=30000
+
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
