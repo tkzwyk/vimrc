@@ -150,6 +150,8 @@ alias ipl='perl -de 1'
 
 alias n='sudo n'
 
+alias p='peco'
+
 # Umask
 #
 # /etc/profile sets 022, removing write perms to group + others.
