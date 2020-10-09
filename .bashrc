@@ -240,8 +240,7 @@ function g() {
 }
 
 function git-push-with-tags() {
-  git push
-  git push --tags
+  git push && git push --tags
 }
 
 function git-clean-after-merging-PR() {
