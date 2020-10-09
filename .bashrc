@@ -253,6 +253,10 @@ function git-clean-after-merging-PR() {
   git checkout master && git pull && git branch -d "$targetBranch" && git pull --prune
 }
 
-# Set a default prompt of: user@host ~/path $
-PS1='\[\e]0;\w\a\]\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\] \$ '
+source ~/.git-prompt.sh
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWUPSTREAM=1
+PS1='\[\e]0;\w\a\]\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[31m\]$(__git_ps1)\[\e[0m\] \$ '
 
