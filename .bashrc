@@ -148,6 +148,7 @@ alias weather='curl -4 wttr.in/?M'
 # Interactive Perl Shell (REPL for Perl)
 alias ipl='perl -de 1'
 
+alias n='sudo n'
 
 # Umask
 #
