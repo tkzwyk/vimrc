@@ -251,8 +251,13 @@ function git-clean-after-merging-PR() {
     read -p "Enter target branch name [${currentBranch}]: " answer
     targetBranch=${answer:-$currentBranch}
   fi
+
   local defaultBranch
   defaultBranch=$(git symbolic-ref refs/remotes/origin/HEAD | awk -F'[/]' '{print $NF}')
+  if [ "$defaultBranch" = "" ]; then
+    defaultBranch=$(git remote show origin | awk '/HEAD branch/ {print $NF}')
+  fi
+
   git checkout "$defaultBranch" && git pull && git branch -d "$targetBranch" && git pull --prune
 }
 
