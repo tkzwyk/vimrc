@@ -244,12 +244,16 @@ function git-push-with-tags() {
 }
 
 function git-clean-after-merging-PR() {
+  local targetBranch
   if [ "$1" == "" ]; then
+    local currentBranch
     currentBranch=$(git branch --show-current)
     read -p "Enter target branch name [${currentBranch}]: " answer
     targetBranch=${answer:-$currentBranch}
   fi
-  git checkout master && git pull && git branch -d "$targetBranch" && git pull --prune
+  local defaultBranch
+  defaultBranch=$(git symbolic-ref refs/remotes/origin/HEAD | awk -F'[/]' '{print $NF}')
+  git checkout "$defaultBranch" && git pull && git branch -d "$targetBranch" && git pull --prune
 }
 
 source ~/.git-prompt.sh
